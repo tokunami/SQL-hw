@@ -55,12 +55,17 @@ update actor set first_name=replace(first_name, 'HARPO', 'GROUCHO') where last_n
 select * from actor where first_name = 'harpo' or first_name = 'groucho';
 
 -- 4d. Perhaps we were too hasty in changing GROUCHO to HARPO. It turns out that GROUCHO was the correct name after all! In a single query, if the first name of the actor is currently HARPO, change it to GROUCHO. Otherwise, change the first name to MUCHO GROUCHO, as that is exactly what the actor will be with the grievous error. BE CAREFUL NOT TO CHANGE THE FIRST NAME OF EVERY ACTOR TO MUCHO GROUCHO, HOWEVER! (Hint: update the record using a unique identifier.)
-update actor set first_name=replace(first_name, 'GROUCHO', 'HARPO'), first_name=replace(first_name, 'HARPO', 'MUCHO GROUCHO') where last_name='williams';
-select * from actor where first_name = 'harpo' or first_name = 'groucho' or last_name='williams';
-
--- update actor set first_name = 'GROUCHO' where first_name = 'harpo' and last_name='williams';
-update actor set first_name=replace(first_name, 'MUCHO GROUCHO', 'GROUCHO'), first_name=replace(first_name, 'HARPO', 'GROUCHO') where last_name='williams';
-select * from actor where first_name = 'harpo' or first_name = 'groucho' or last_name='williams';
+-- ** regenerate 'harpo williams'  **
+-- update actor set first_name=replace(first_name, 'GROUCHO', 'HARPO') where last_name='williams';
+-- select * from actor where first_name = 'harpo' or first_name = 'groucho' or last_name='williams';
+-- ** update first_name in a single query **
+update actor
+set
+first_name=replace(first_name, 'GROUCHO', 'MUCHO GROUCHO'),
+first_name=replace(first_name, 'HARPO', 'GROUCHO')
+where last_name='williams';
+-- ** then confirm it ** 
+select * from actor where first_name = 'harpo' or first_name like '%groucho' or last_name='williams';
 
 -- 5a. You cannot locate the schema of the address table. Which query would you use to re-create it? 
 describe sakila.address;
@@ -215,6 +220,16 @@ inner join payment
 group by category.category_id
 order by gross_revenue desc
 limit 0,5;
+
+-- ** just tried to use inner join **
+select first_name, last_name
+from actor
+inner join film_actor
+	on actor.actor_id = film_actor.actor_id
+inner join film
+	on film_actor.film_id=film.film_id
+where film.title='Alone Trip';
+
 
 -- 8b. How would you display the view that you created in 8a?
 select * from top5_genres;
