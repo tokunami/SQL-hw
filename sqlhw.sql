@@ -97,7 +97,8 @@ select store_id, city, country from store inner join address on store.address_id
 select name, sum(payment.amount) as 'gross_revenue' from category inner join film_category on category.category_id=film_category.category_id inner join inventory on film_category.film_id=inventory.film_id inner join rental on inventory.inventory_id=rental.inventory_id inner join payment on rental.rental_id = payment.rental_id group by category.category_id order by gross_revenue desc limit 0,5;
 
 -- 8a. In your new role as an executive, you would like to have an easy way of viewing the Top five genres by gross revenue. Use the solution from the problem above to create a view. If you haven't solved 7h, you can substitute another query to create a view.
-
+create or replace view top5_genres as select name, sum(payment.amount) as 'gross_revenue' from category inner join film_category on category.category_id=film_category.category_id inner join inventory on film_category.film_id=inventory.film_id inner join rental on inventory.inventory_id=rental.inventory_id inner join payment on rental.rental_id = payment.rental_id group by category.category_id order by gross_revenue desc limit 0,5;
 -- 8b. How would you display the view that you created in 8a?
-
+select * from top5_genres;
 -- 8c. You find that you no longer need the view top_five_genres. Write a query to delete it.
+drop view if exists top5_genres;
