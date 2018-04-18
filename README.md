@@ -7,4 +7,4 @@ This code is tested using [MySQLWorkbench](https://dev.mysql.com/downloads/workb
 
 ### Usage
 1. install `sakila` database from [here](https://dev.mysql.com/doc/index-other.html) at the same hierarchical level as `sqlhw.sql`
-2. open `sglhw.sgl` on MySQL Workbench and execute
+2. open `sqlhw.sql` on MySQL Workbench and execute
