@@ -47,15 +47,15 @@ describe sakila.address;
 -- 6a. Use JOIN to display the first and last names, as well as the address, of each staff member. Use the tables staff and address:
 select first_name, last_name, address from address inner join staff on address.address_id;
 -- 6b. Use JOIN to display the total amount rung up by each staff member in August of 2005. Use tables staff and payment.
--- both work 
+-- it works either way
 select first_name, last_name, sum(amount) from payment inner join staff on payment.staff_id = staff.staff_id where payment_date between '2005-07-31 23:59:59' and '2005-09-01 00:00:00' group by staff.staff_id;
 select first_name, last_name, sum(amount) from staff inner join payment on staff.staff_id = payment.staff_id where payment_date between '2005-07-31 23:59:59' and '2005-09-01 00:00:00' group by payment.staff_id;
 -- 6c. List each film and the number of actors who are listed for that film. Use tables film_actor and film. Use inner join.
 select title, count(*) as 'actors count' from film_actor inner join film on film_actor.film_id = film.film_id group by film.film_id;
 -- 6d. How many copies of the film Hunchback Impossible exist in the inventory system?
-
+select title, count(*) as 'inventory count' from inventory inner join film on film.film_id = inventory.film_id where title = 'Hunchback Impossible' group by inventory.film_id;
 -- 6e. Using the tables payment and customer and the JOIN command, list the total paid by each customer. List the customers alphabetically by last name:
--- 
+select first_name, last_name, sum(amount) as 'total paid' from payment inner join customer on payment.customer_id=customer.customer_id group by customer.customer_id order by customer.last_name;
 -- 
 --     ![Total amount paid](Images/total_payment.png)
 -- 
